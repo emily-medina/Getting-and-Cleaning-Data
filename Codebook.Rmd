@@ -6,44 +6,45 @@ The run_analysis.R script performs the data preparation and then followed by the
 Download the dataset: UCI HAR Dataset
 
 make variable names for each data set
-features <- features.txt : 561 rows, 2 columns 
-The features selected for this database come from the accelerometer and gyroscope 3-axial raw signals tAcc-XYZ and tGyro-XYZ.
-activities <- activity_labels.txt : 6 rows, 2 columns 
-List of activities performed when the corresponding measurements were taken and its codes (labels)
-subjecttest <- test/subject_test.txt : 2947 rows, 1 column 
-contains test data of 9/30 volunteer test subjects being observed
-xtest <- test/X_test.txt : 2947 rows, 561 columns 
-contains recorded features test data
-ytest <- test/y_test.txt : 2947 rows, 1 columns 
-contains test data of activities’code labels
-subjecttrain <- test/subject_train.txt : 7352 rows, 1 column 
-contains train data of 21/30 volunteer subjects being observed
-xtrain <- test/X_train.txt : 7352 rows, 561 columns 
-contains recorded features train data
-ytrain <- test/y_train.txt : 7352 rows, 1 columns 
-contains train data of activities’code labels
+
+features - 'features.txt': List of all features.
+
+activitylabels- 'activity_labels.txt': Links the class labels with their activity name.
+
+subjecttest- 'train/subject_train.txt': Each row identifies the subject who performed the activity for each window sample. Its range is from 1 to 30. 
+
+xtrain- 'train/X_train.txt': Training set.
+
+ytrain- 'train/y_train.txt': Training labels.
+
+xtest- 'test/X_test.txt': Test set.
+
+ytest- 'test/y_test.txt': Test labels.
+
 
 Merging training and test sets
-x (10299 rows, 561 columns) is created by merging x_train and x_test using rbind() function
-y (10299 rows, 1 column) is created by merging y_train and y_test using rbind() function
-subject (10299 rows, 1 column) is created by merging subject_train and subject_test using rbind() function
-cleandata (10299 rows, 563 column) is created by merging Subject, Y and X using cbind() function
+x (10299 rows, 561 columns) is created by merging x_train and x_test with the rbind() function
+y (10299 rows, 1 column) is created by merging y_train and y_test with the rbind() function
+subject (10299 rows, 1 column) is created by merging subject_train and subject_test with the rbind() function
+cleandata (10299 rows, 563 column) is created by merging subject, y and x with thecbind() function
 
-Extracts only the measurements on the mean and standard deviation for each measurement
-seconddata (10299 rows, 88 columns) is created by subsetting cleandata, but only including columns: subject, code and the measurements on the mean and standard deviation (std) for each measurement
+Extracts only the mean and standard deviation for each measurement
+seconddata (10299 rows, 88 columns) is created by subsetting cleandata, but only including columns: subject, code and the measurements on the mean and standard deviation for each measurement
 
 Uses descriptive activity names to name the activities in the data set
-Entire numbers in code column of the TidyData replaced with corresponding activity taken from second column of the  activities variable
+Entire numbers in code column of the cleandata replaced with corresponding activity taken from second column of the  activities variable
 
-Appropriately labels the data set with descriptive variable names
-code column in TidyData renamed into activities
-All Acc in column’s name replaced by Accelerometer
-All Gyro in column’s name replaced by Gyroscope
-All BodyBody in column’s name replaced by Body
-All Mag in column’s name replaced by Magnitude
-All start with character f in column’s name replaced by Frequency
-All start with character t in column’s name replaced by Time
+labels the data set with descriptive variable names
+code column in cleandata renamed into activities
+'Acc' in column name replaced by 'Accelerometer'
+'Gyro' in column name replaced by 'Gyroscope'
+'BodyBody' in column name replaced by 'Body'
+'Mag' in column name replaced by 'Magnitude'
+character 'f' in beginning of column name replaced by 'Frequency'
+character 't' in beginning of column name replaced by 'Time'
 
-From the data set in step 4, creates a second, independent data set with the averages of each variable for each activity and each subject
+Using the data set in step 4, creates a second data set with the averages of each variable for each activity and each subject
+
 seconddata (180 rows, 88 columns) is created by sumarizing cleandata taking the means of each variable for each activity and each subject, after groupped by subject and activity.
-Export cleandata into FinalAssignmentData.txt file.
+
+export seconddata into FinalAssignmentData.txt file.
